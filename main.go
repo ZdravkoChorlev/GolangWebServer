@@ -1,6 +1,7 @@
 package main
 
 import (
+	"web/server"
 	"log"
 	"net/http"
 )
@@ -12,13 +13,16 @@ Maintainer: Zdravko Chorlev`
 )
 
 func main() {
-
 	log.Println("Starting server ...")
 
 	http.HandleFunc("/", info)
+
 	log.Fatal(http.ListenAndServe(":8090", nil))
 }
 
 func info(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(infoMsg))
+	_, err := w.Write([]byte(infoMsg))
+	if err != nil {
+		log.Fatal(err)
+	}
 }
